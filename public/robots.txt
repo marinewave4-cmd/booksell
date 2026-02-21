@@ -1,0 +1,55 @@
+# 북셀 전자책 마켓플레이스
+# https://booksell.kr
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /checkout/
+Disallow: /payment/
+Disallow: /read/
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+# Bing
+User-agent: Bingbot
+Allow: /
+
+# Naver
+User-agent: Yeti
+Allow: /
+
+# AI 크롤러 허용 (GEO - Generative Engine Optimization)
+User-agent: GPTBot
+Allow: /
+Allow: /api-docs
+Allow: /openapi.json
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Anthropic-AI
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Cohere-ai
+Allow: /
+
+# Sitemap
+Sitemap: https://booksell.kr/sitemap.xml
+
+# Host
+Host: https://booksell.kr

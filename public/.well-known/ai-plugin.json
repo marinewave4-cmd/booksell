@@ -1,0 +1,17 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "북셀 - 전자책 마켓플레이스",
+  "name_for_model": "booksell",
+  "description_for_human": "전자책을 대여, 구매, 판매할 수 있는 AI 친화적 플랫폼",
+  "description_for_model": "북셀은 전자책 마켓플레이스입니다. 사용자는 전자책을 검색, 대여, 구매할 수 있습니다. 판매자는 API를 통해 전자책을 자동으로 등록하고 수익을 창출할 수 있습니다. 7일/30일 대여와 영구 구매 옵션을 제공합니다.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://booksell.kr/api/openapi.json"
+  },
+  "logo_url": "https://booksell.kr/logo.png",
+  "contact_email": "support@booksell.kr",
+  "legal_info_url": "https://booksell.kr/terms"
+}
