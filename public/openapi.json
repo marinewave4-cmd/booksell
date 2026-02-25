@@ -7,12 +7,12 @@
     "contact": {
       "name": "북셀 지원팀",
       "email": "support@booksell.kr",
-      "url": "https://booksell.kr"
+      "url": "https://booksell-kr.vercel.app"
     }
   },
   "servers": [
     {
-      "url": "https://booksell.kr/api",
+      "url": "https://booksell-kr.vercel.app/api",
       "description": "프로덕션 서버"
     },
     {

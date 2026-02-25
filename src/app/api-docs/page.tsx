@@ -20,7 +20,7 @@ const apiJsonLd = {
   '@type': 'TechArticle',
   name: '북셀 API 문서',
   description: '전자책 대여/구매 마켓플레이스 북셀의 REST API 문서',
-  url: 'https://booksell.kr/api-docs',
+  url: 'https://booksell-kr.vercel.app/api-docs',
   author: {
     '@type': 'Organization',
     name: '북셀',
@@ -57,7 +57,7 @@ export default function ApiDocsPage() {
           <section className="mb-8">
             <h2 className="text-xl font-bold mb-4">기본 URL</h2>
             <div className="bg-gray-900 text-gray-100 rounded-lg p-4 font-mono text-sm">
-              <p>프로덕션: https://booksell.kr/api</p>
+              <p>프로덕션: https://booksell-kr.vercel.app/api</p>
               <p>개발: http://localhost:3000/api</p>
             </div>
           </section>

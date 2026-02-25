@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     'AI 전자책', '자동 등록', 'API', '북셀', 'booksell',
     '디지털 콘텐츠', '크리에이터', '수익화', '온라인 서점',
   ],
-  authors: [{ name: '북셀', url: 'https://booksell.kr' }],
+  authors: [{ name: '북셀', url: 'https://booksell-kr.vercel.app' }],
   creator: '북셀',
   publisher: '북셀',
   formatDetection: {
@@ -84,12 +84,12 @@ const websiteJsonLd = {
   name: '북셀',
   alternateName: ['BookSell', '북셀 전자책', 'booksell'],
   description: 'AI 시대의 전자책 마켓플레이스. 자동 등록 API 제공.',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://booksell.kr',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://booksell-kr.vercel.app',
   potentialAction: {
     '@type': 'SearchAction',
     target: {
       '@type': 'EntryPoint',
-      urlTemplate: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://booksell.kr'}/books?search={search_term_string}`,
+      urlTemplate: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://booksell-kr.vercel.app'}/books?search={search_term_string}`,
     },
     'query-input': 'required name=search_term_string',
   },
@@ -100,8 +100,8 @@ const organizationJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: '북셀',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://booksell.kr',
-  logo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://booksell.kr'}/logo.png`,
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://booksell-kr.vercel.app',
+  logo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://booksell-kr.vercel.app'}/logo.png`,
   description: '전자책 대여 및 구매 마켓플레이스',
   contactPoint: {
     '@type': 'ContactPoint',

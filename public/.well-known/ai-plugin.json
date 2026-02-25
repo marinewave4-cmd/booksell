@@ -9,9 +9,9 @@
   },
   "api": {
     "type": "openapi",
-    "url": "https://booksell.kr/api/openapi.json"
+    "url": "https://booksell-kr.vercel.app/api/openapi.json"
   },
-  "logo_url": "https://booksell.kr/logo.png",
+  "logo_url": "https://booksell-kr.vercel.app/logo.png",
   "contact_email": "support@booksell.kr",
-  "legal_info_url": "https://booksell.kr/terms"
+  "legal_info_url": "https://booksell-kr.vercel.app/terms"
 }
