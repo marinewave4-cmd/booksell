@@ -1,17 +1,17 @@
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
-import { retrievePaymentIntent } from '@/lib/stripe'
+import { captureOrder } from '@/lib/paypal'
 import { calculateFees } from '@/lib/payments'
 
 export async function POST(request: Request) {
   try {
-    const { paymentIntentId, ebookId, purchaseType, amount } = await request.json()
+    const { orderId, ebookId, purchaseType, amount } = await request.json()
 
-    // Payment Intent 확인
-    const paymentIntent = await retrievePaymentIntent(paymentIntentId)
+    // PayPal 결제 승인
+    const captureResult = await captureOrder(orderId)
 
-    if (paymentIntent.status !== 'succeeded') {
+    if (captureResult.status !== 'COMPLETED') {
       return NextResponse.json({ error: '결제가 완료되지 않았습니다' }, { status: 400 })
     }
 
@@ -51,8 +51,8 @@ export async function POST(request: Request) {
         ebook_id: ebookId,
         type: purchaseType,
         amount,
-        payment_key: paymentIntentId,
-        payment_method: 'stripe',
+        payment_key: orderId,
+        payment_method: 'paypal',
         payment_status: 'completed',
         expires_at: expiresAt,
       })
@@ -68,8 +68,8 @@ export async function POST(request: Request) {
 
     // 정산 정보 로깅
     const fees = calculateFees(amount)
-    console.log('Stripe Payment completed:', {
-      paymentIntentId,
+    console.log('PayPal Payment completed:', {
+      orderId,
       amount,
       fees,
       sellerId: ebook.seller_id,
@@ -78,9 +78,10 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       purchase,
+      captureResult,
     })
   } catch (error: any) {
-    console.error('Stripe confirm error:', error)
+    console.error('PayPal capture error:', error)
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 }

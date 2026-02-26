@@ -1,7 +1,7 @@
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
-import { createPaymentIntent } from '@/lib/stripe'
+import { createOrder } from '@/lib/paypal'
 
 export async function POST(request: Request) {
   try {
@@ -27,25 +27,22 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: '전자책을 찾을 수 없습니다' }, { status: 404 })
     }
 
-    // Stripe Payment Intent 생성
-    const paymentIntent = await createPaymentIntent({
-      amount, // 원화 (KRW)
-      currency: 'krw',
-      metadata: {
-        ebookId,
-        ebookTitle: ebook.title,
-        purchaseType,
-        userId: user.id,
-        sellerId: ebook.seller_id,
-      },
+    // 원화를 달러로 변환 (대략적인 환율 적용, 실제로는 환율 API 사용 권장)
+    const usdAmount = amount / 1350 // 대략적인 환율
+
+    // PayPal 주문 생성
+    const order = await createOrder({
+      amount: usdAmount,
+      currency: 'USD',
+      description: `북셀 - ${ebook.title} (${purchaseType})`,
     })
 
     return NextResponse.json({
-      clientSecret: paymentIntent.client_secret,
-      paymentIntentId: paymentIntent.id,
+      orderId: order.id,
+      approvalUrl: order.links.find((link: any) => link.rel === 'approve')?.href,
     })
   } catch (error: any) {
-    console.error('Stripe payment error:', error)
+    console.error('PayPal order error:', error)
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 }
