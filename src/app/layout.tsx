@@ -1,5 +1,7 @@
 import './globals.css'
 import type { Metadata, Viewport } from 'next'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
+import PWARegister from '@/components/PWARegister'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -191,7 +193,11 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
         />
       </head>
-      <body className="antialiased text-gray-900 bg-white min-h-screen">{children}</body>
+      <body className="antialiased text-gray-900 bg-white min-h-screen">
+        <GoogleAnalytics />
+        <PWARegister />
+        {children}
+      </body>
     </html>
   )
 }

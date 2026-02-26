@@ -3,6 +3,8 @@
   "short_name": "북셀",
   "description": "전자책을 대여하고 구매하는 가장 쉬운 방법",
   "start_url": "/",
+  "scope": "/",
+  "id": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2563eb",
@@ -23,5 +25,20 @@
   ],
   "categories": ["books", "education", "shopping"],
   "lang": "ko-KR",
-  "dir": "ltr"
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "screenshots": [
+    {
+      "src": "/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "640x1136",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
 }
