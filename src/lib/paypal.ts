@@ -4,10 +4,19 @@ const PAYPAL_API_BASE = process.env.NODE_ENV === 'production'
   ? 'https://api-m.paypal.com'
   : 'https://api-m.sandbox.paypal.com'
 
+// PayPal 설정 여부 확인
+export function isPayPalConfigured(): boolean {
+  return !!(process.env.PAYPAL_CLIENT_ID && process.env.PAYPAL_CLIENT_SECRET)
+}
+
 // PayPal Access Token 발급
 async function getAccessToken() {
-  const clientId = process.env.PAYPAL_CLIENT_ID!
-  const clientSecret = process.env.PAYPAL_CLIENT_SECRET!
+  const clientId = process.env.PAYPAL_CLIENT_ID
+  const clientSecret = process.env.PAYPAL_CLIENT_SECRET
+
+  if (!clientId || !clientSecret) {
+    throw new Error('PayPal 환경변수가 설정되지 않았습니다. PAYPAL_CLIENT_ID와 PAYPAL_CLIENT_SECRET을 확인하세요.')
+  }
 
   const auth = Buffer.from(`${clientId}:${clientSecret}`).toString('base64')
 

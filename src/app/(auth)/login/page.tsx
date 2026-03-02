@@ -67,7 +67,7 @@ export default function LoginPage() {
     }
   }
 
-  const handleSocialLogin = async (provider: 'kakao' | 'google') => {
+  const handleSocialLogin = async (provider: 'kakao' | 'google' | 'naver') => {
     setLoading(true)
     try {
       const res = await fetch(`/api/auth/${provider}`, {
@@ -75,7 +75,22 @@ export default function LoginPage() {
       })
       const data = await res.json()
       if (data.url) {
-        window.location.href = data.url
+        // 🔒 보안: Open Redirect 방지 - URL 검증
+        const allowedHosts = [
+          'accounts.google.com',
+          'kauth.kakao.com',
+          'nid.naver.com',
+          'accounts.kakao.com',
+        ]
+        try {
+          const urlObj = new URL(data.url)
+          if (!allowedHosts.includes(urlObj.host)) {
+            throw new Error('유효하지 않은 인증 URL입니다')
+          }
+          window.location.href = data.url
+        } catch (urlError) {
+          throw new Error('잘못된 인증 URL입니다')
+        }
       }
     } catch (err: any) {
       setError(err.message)

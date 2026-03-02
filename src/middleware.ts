@@ -15,11 +15,26 @@ export function middleware(request: NextRequest) {
   // XSS 방지
   response.headers.set('X-XSS-Protection', '1; mode=block')
 
-  // API 라우트에 대한 CORS 설정
+  // API 라우트에 대한 CORS 설정 (화이트리스트)
   if (request.nextUrl.pathname.startsWith('/api/')) {
-    response.headers.set('Access-Control-Allow-Origin', '*')
+    const origin = request.headers.get('origin')
+    const allowedOrigins = [
+      'https://booksell-kr.vercel.app',
+      'https://booksell.kr',
+      'https://www.booksell.kr',
+    ]
+    
+    // 개발 환경에서는 localhost 허용
+    if (process.env.NODE_ENV === 'development') {
+      allowedOrigins.push('http://localhost:3000')
+    }
+
+    if (origin && allowedOrigins.includes(origin)) {
+      response.headers.set('Access-Control-Allow-Origin', origin)
+    }
     response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
     response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+    response.headers.set('Access-Control-Allow-Credentials', 'true')
   }
 
   return response

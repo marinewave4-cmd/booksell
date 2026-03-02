@@ -42,7 +42,7 @@ export default function PDFViewer({ pdfUrl, purchaseType, expiresAt }: PDFViewer
 
         // PDF.js 동적 로드
         const pdfjsLib = await import('pdfjs-dist')
-        pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`
+        pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`
 
         // PDF 로드
         const loadingTask = pdfjsLib.getDocument(pdfUrl)

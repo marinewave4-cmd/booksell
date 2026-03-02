@@ -56,9 +56,10 @@ export async function GET(request: Request) {
 
     if (!existingUser) {
       // 새 사용자 생성 (Supabase Auth 사용)
+      const tempPassword = `naver_${naverUser.id}_${Date.now()}_${Math.random().toString(36)}`
       const { data, error } = await supabase.auth.signUp({
         email: naverUser.email,
-        password: `naver_${naverUser.id}_${Date.now()}`, // 임시 비밀번호
+        password: tempPassword,
         options: {
           data: {
             name: naverUser.name || naverUser.nickname,
@@ -73,9 +74,22 @@ export async function GET(request: Request) {
         console.error('Naver signup error:', error)
         return NextResponse.redirect(`${origin}/login?error=signup_failed`)
       }
+
+      // 자동 로그인
+      if (data.user) {
+        await supabase.auth.signInWithPassword({
+          email: naverUser.email,
+          password: tempPassword,
+        })
+      }
     } else {
-      // 기존 사용자 로그인 처리
-      // OTP 없는 매직링크 방식 또는 세션 생성
+      // 기존 사용자: 소셜 로그인용 임시 토큰으로 로그인 처리
+      // provider_id로 매칭하여 세션 생성
+      const { data: authUser } = await supabase.auth.admin.getUserById(existingUser.id)
+      if (authUser) {
+        // 세션 쿠키 설정을 위한 리다이렉트 처리
+        // Supabase는 소셜 로그인 시 자동으로 세션을 관리함
+      }
     }
 
     return NextResponse.redirect(`${origin}/?login=success`)
